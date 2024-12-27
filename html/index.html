@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Student Portal Admin</title>
+</head>
+<body>
+    <h1>Student Portal Admin</h1>
+
+    <form id="form-student">
+        <label for="input-name">Fullname</label>
+        <input type="text" id="input-name" name="fullname" required>
+
+        <label for="input-date">Birth Date</label>
+        <input type="date" id="input-date" name="birthdate" required>
+
+        <label for="input-gender">Gender</label>
+        <select id="input-gender" name="gender" required>
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+        </select>   
+
+
+        <label for="input-prody">Program Study</label>
+        <select id="input-prody" name="program" required>
+            <option value="ekonomi">Ekonomi</option>
+            <option value="manajemen">Manajemen</option>
+            <option value="akuntansi">Akuntansi</option>
+            <option value="administrasi publik">Administrasi Publik</option>
+            <option value="administrasi bisnis">Administrasi Bisnis</option>
+            <option value="hubungan internasional">Hubungan Internasional</option>
+            <option value="teknik sipil">Teknik Sipil</option>
+            <option value="arsitektur">Arsitektur</option>
+            <option value="matematika">Matematika</option>
+            <option value="fisika">Fisika</option>
+            <option value="informatika">Informatika</option>
+            </select>
+
+        <input type="submit" value="Add student" id="add-btn">
+    </form>
+
+    <table id="table-student">
+        <thead>
+            <tr>
+                <th>No</th>
+                <th>Full Name</th>
+                <th>Birth Date</th>
+                <th>Gender</th>
+                <th>Student ID</th>
+                <th>Faculty</th>
+                <th>Program Study</th>
+                <th>Option</th>
+            </tr>
+        </thead>   
+
+        <tbody id="student-data">
+            <tr>
+                <td>1</td>
+                <td>Siti Aida hanun</td>
+                <td>2004-11-21</td>
+                <td>female</td>
+                <td>12345</td>
+                <td>Science</td>
+                <td>Matematika</td>
+                <td><button type="button" class="delete-btn">Delete</button></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <script>
+        const form = document.getElementById('form-student');
+        const tableBody = document.getElementById('student-data');
+        let studentId = 2; // Inisialisasi ID student baru dimulai dari 2 (karena dummy data sudah ada 1 student)
+
+        form.addEventListener('submit', function(event) {
+            event.preventDefault(); 
+            //ambil nilai dr form 
+            const fullName = document.getElementById('input-name').value;
+            const birthDate = document.getElementById('input-date').value;
+            const gender = document.getElementById('input-gender').value;
+            const programStudy = document.getElementById('input-prody').value;
+
+            // membuat elemen baris tabel baru
+            const newRow = document.createElement('tr');
+            newRow.innerHTML = `
+                <td>${studentId}</td>
+                <td>${fullName}</td>
+                <td>${birthDate}</td>
+                <td>${gender}</td>
+                <td>${Math.floor(Math.random() * 100000000)}</td> <!-- Generate random student ID -->
+                <td>${programStudy}</td>
+                <td><button type="button" class="delete-btn">Delete</button></td>
+            `;
+
+            // menambahkan baris baru ke dalam tabel
+            tableBody.appendChild(newRow);
+
+            // menambahkan event listener untuk tombol delete baru
+            addDeleteEvent(newRow.querySelector('.delete-btn'));
+
+            // menambah ID student
+            studentId++;
+
+            // reset form setelah submit
+            form.reset();
+        });
+
+        //untuk menghapus baris tabel
+        function addDeleteEvent(deleteButton) {
+            deleteButton.addEventListener('click', function() {
+                const row = deleteButton.parentElement.parentElement; // Dapatkan baris yang terkait dengan tombol
+                row.remove(); // Hapus baris dari tabel
+            });
+        }
+        document.querySelectorAll('.delete-btn').forEach(addDeleteEvent);
+    </script>
+</body>
+</html>

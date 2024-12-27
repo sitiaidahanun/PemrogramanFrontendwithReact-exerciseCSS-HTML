@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Portal Admin</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Student Portal Admin</h1>
+
+        <form id="form-student" class="form">
+            <div class="form-group">
+                <label for="input-name">Fullname</label>
+                <input type="text" id="input-name" name="fullname" required>
+            </div>
+
+            <div class="form-group">
+                <label for="input-date">Birth Date</label>
+                <input type="date" id="input-date" name="birthdate" required>
+            </div>
+
+            <div class="form-group">
+                <label for="input-gender">Gender</label>
+                <select id="input-gender" name="gender" required>
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="input-prody">Program Study</label>
+                <select id="input-prody" name="prodi" required>
+                    <option value="ekonomi">Ekonomi</option>
+                    <option value="manajemen">Manajemen</option>
+                    <option value="akuntansi">Akuntansi</option>
+                    <option value="administrasi publik">Administrasi Publik</option>
+                    <option value="administrasi bisnis">Administrasi Bisnis</option>
+                    <option value="hubungan internasional">Hubungan Internasional</option>
+                    <option value="teknik sipil">Teknik Sipil</option>
+                    <option value="arsitektur">Arsitektur</option>
+                    <option value="matematika">Matematika</option>
+                    <option value="fisika">Fisika</option>
+                    <option value="informatika">Informatika</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="input-fakultas">Fakultas</label>
+                <select id="input-fakultas" name="fakultas" required>
+                    <option value="sains">Sains</option>
+                    <option value="teknik">Teknik</option>
+                    <option value="sosial">Sosial</option>
+                </select>
+            </div>
+
+            <div class="form-group submit-button">
+                <input type="submit" value="Add student" id="add-btn">
+            </div>
+        </form>
+
+        <table id="table-student">
+            <thead>
+                <tr>
+                    <th>No</th>
+                    <th>Full Name</th>
+                    <th>Birth Date</th>
+                    <th>Gender</th>
+                    <th>Student ID</th>
+                    <th>Program Study</th>
+                    <th>Faculty</th>
+                    <th>Option</th>
+                </tr>
+            </thead>
+
+            <tbody id="student-data">
+                <tr>
+                    <td>1</td>
+                    <td>Siti Aida Hanun</td>
+                    <td>2004-11-21</td>
+                    <td>Female</td>
+                    <td>12345</td>
+                    <td>Matematika</td>
+                    <td>Sains</td>
+                    <td><button type="button" class="delete-btn">Delete</button></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        const form = document.getElementById('form-student');
+        const tableBody = document.getElementById('student-data');
+        let studentId = 2;
+
+        form.addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const fullName = document.getElementById('input-name').value;
+            const birthDate = document.getElementById('input-date').value;
+            const gender = document.getElementById('input-gender').value;
+            const programStudy = document.getElementById('input-prody').value;
+            const faculty = document.getElementById('input-fakultas').value;
+
+            const newRow = document.createElement('tr');
+            newRow.innerHTML = `
+                <td>${studentId}</td>
+                <td>${fullName}</td>
+                <td>${birthDate}</td>
+                <td>${gender}</td>
+                <td>${Math.floor(Math.random() * 100000000)}</td>
+                <td>${programStudy}</td>
+                <td>${faculty}</td>
+                <td><button type="button" class="delete-btn">Delete</button></td>
+            `;
+
+            tableBody.appendChild(newRow);
+            addDeleteEvent(newRow.querySelector('.delete-btn'));
+            studentId++;
+            form.reset();
+        });
+
+        function addDeleteEvent(deleteButton) {
+            deleteButton.addEventListener('click', function() {
+                const row = deleteButton.parentElement.parentElement;
+                row.remove();
+            });
+        }
+
+        document.querySelectorAll('.delete-btn').forEach(addDeleteEvent);
+    </script>
+</body>
+</html>
